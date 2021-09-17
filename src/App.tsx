@@ -22,6 +22,7 @@ const Div = styled.div`
   .main{
     flex-grow: 1;
     overflow: auto;
+    padding:30px 100px ;
   }
 `
 function App() {

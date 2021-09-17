@@ -1,9 +1,15 @@
 import React from 'react';
+import styled from 'styled-components';
+const FooterStyle=styled.footer`
+ text-align: center;
+  padding: 10px 100px;
+  color: #aaa;
+`
 const Footer = () => {
     return (
-        <footer>
-            脚
-        </footer>
+        <FooterStyle>
+            Footer
+        </FooterStyle>
     )
 }
 export default Footer
