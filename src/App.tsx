@@ -10,6 +10,7 @@ import { lazy, Suspense } from "react";
 import Loading from "./components/Loading";
 import styled from 'styled-components';
 
+
 const Home = lazy(() => import("./views/Home"))
 const History = lazy(() => import("./views/History"))
 const About = lazy(() => import("./views/About"))
