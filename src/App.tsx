@@ -1,25 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
+import {
+  Switch,
+  Route,
+} from 'react-router-dom';
+import './index.scss';
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import { lazy, Suspense } from "react";
+import Loading from "./components/Loading";
+import styled from 'styled-components';
+
+const Home = lazy(() => import("./views/Home"))
+const History = lazy(() => import("./views/History"))
+const About = lazy(() => import("./views/About")) //组件不会立马加载
+
+
+const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  .main{
+    flex-grow: 1;
+    overflow: auto;
+  }
+`
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Div>
+      <Header />
+      <main className="main">
+        <Suspense fallback={<Loading />}>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/history" exact component={History} />
+            <Route path="/about" exact component={About} />
+          </Switch>
+        </Suspense>
+      </main>
+      <Footer />
+    </Div>
   );
 }
 
