@@ -5,9 +5,10 @@ class AuthStore {
     @observable isLogin = false; //是否登录
     @observable isLoading = false; //是否在等待
     @observable values = { //登陆信息
-        username: '',
+        username: 'lizijie',
         password: ''
     };
+
 
     @action setIsLogin(isLogin: boolean) {
         this.isLogin = isLogin;

@@ -12,8 +12,11 @@ import styled from 'styled-components';
 
 const Home = lazy(() => import("./views/Home"))
 const History = lazy(() => import("./views/History"))
-const About = lazy(() => import("./views/About")) //组件不会立马加载
+const About = lazy(() => import("./views/About"))
 
+// @ts-ignore
+const Login = lazy(() => import("./views/Login"))//组件不会立马加载
+const Register = lazy(() => import("./views/Register"))
 
 const Div = styled.div`
   display: flex;
@@ -35,6 +38,8 @@ function App() {
             <Route path="/" exact component={Home} />
             <Route path="/history" exact component={History} />
             <Route path="/about" exact component={About} />
+              <Route path="/login" exact component={Login} />
+              <Route path="/register" exact component={Register} />
           </Switch>
         </Suspense>
       </main>

@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
+
 const HeaderStyle = styled.header`
     background: #02101f;
     color: white;
@@ -24,6 +25,7 @@ const Header = () => {
                 <StyleLink to="/history" activeClassName="selected" exact>上传历史</StyleLink>
                 <StyleLink to="/about" activeClassName="selected" exact>关于我</StyleLink>
             </nav>
+
         </HeaderStyle>
     )
 }
