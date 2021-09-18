@@ -1,3 +1,5 @@
+
+
 const AV = require('leancloud-storage');
 const {  User } = AV;
 
@@ -37,9 +39,24 @@ const Auth={
      return User.current()
     }
 }
-
+const Uploader={
+    add(file:any,fileName:any){
+        return new Promise((resolve,reject)=>{
+            const item=new AV.Object('image')
+            const avFile=new AV.File(fileName,file)
+            item.set('title',fileName)
+            item.set('owner',AV.User.current())
+            item.set('url',avFile)
+            item.save().then((serverFile:any)=>{
+                resolve(serverFile)
+            },(error:any)=>{
+                reject(error)
+            })
+        })
+    }
+}
 
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export  {Auth}
+export  {Auth,Uploader}
