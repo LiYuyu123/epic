@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import {Button} from 'antd';
-import 'antd/dist/antd.css';
+import {userStores} from '../stores';
+import {observer} from  'mobx-react'
+import  {useHistory} from 'react-router-dom'
 
 const HeaderStyle = styled.header`
     background: #02101f;
@@ -24,8 +26,23 @@ margin-left: auto;
 const StyleButton=styled(Button)`
 margin-left: 10px;
 `
-const Header = () => {
-   const [isLogin,setIsLogin]=useState(false)
+
+const Header =observer(()=>{
+    const {UserStore,AuthStore}=userStores()
+    const history=useHistory()
+    const handleLogin=()=>{
+        console.log('登录')
+        history.push('/login')
+    }
+    const handleLogout=()=>{
+        console.log('1')
+        AuthStore.logout()
+    }
+    const handleRegister=()=>{
+        console.log('注册')
+        history.push('/register')
+    }
+
     return (
         <HeaderStyle>
             <div>logo</div>
@@ -35,10 +52,12 @@ const Header = () => {
                 <StyleLink to="/about" activeClassName="selected" exact>关于我</StyleLink>
             </nav>
              <Div>
-                 {isLogin ? <>李子杰 <StyleButton type="primary" onClick={()=>setIsLogin(false)}>注销</StyleButton></>:<> <StyleButton type="primary" onClick={()=>setIsLogin(true)}>登录</StyleButton>
-                     <StyleButton type="primary">注册</StyleButton></>}
+                 { // @ts-ignore
+                    UserStore.currentUser ? <>{// @ts-ignore
+                        UserStore.currentUser.attributes.username}<StyleButton type="primary" onClick={handleLogout}>注销</StyleButton></>
+                        :<> <StyleButton type="primary" onClick={handleLogin}>登录</StyleButton><StyleButton type="primary" onClick={handleRegister}>注册</StyleButton></>}
              </Div>
         </HeaderStyle>
     )
-}
+})
 export default Header

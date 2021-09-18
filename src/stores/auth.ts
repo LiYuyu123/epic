@@ -1,18 +1,15 @@
-import {observable, action} from 'mobx';
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import {observable, action, makeObservable} from 'mobx';
+import {Auth} from '../models/model'
+import UserStore from './user'
 class AuthStore {
-    @observable isLogin = false; //是否登录
-    @observable isLoading = false; //是否在等待
+    constructor() {
+        makeObservable(this)
+    }
     @observable values = { //登陆信息
-        username: 'lizijie',
+        username: '',
         password: ''
     };
 
-
-    @action setIsLogin(isLogin: boolean) {
-        this.isLogin = isLogin;
-    }
 
     @action setUsername(username: string) {
         this.values.username = username;
@@ -22,29 +19,34 @@ class AuthStore {
         this.values.password = password;
     }
 
-    @action login() {
-        console.log('登录中..');
-        this.isLoading = true;
-        setTimeout(() => {
-            console.log('登录成功');
-            this.isLogin = true;
-            this.isLoading = false;
-        }, 3000);
+    @action login(username:any,password:any) {
+    return new Promise((resolve ,reject)=>{
+       Auth.login(username,password).then((user)=>{
+           UserStore.pullUser()
+           resolve(user)
+       }).catch((error)=>{
+           UserStore.restUser()
+           reject(error)
+       })
+    })
     }
 
     @action register() {//注册
-        console.log('注册中..');
-        this.isLoading = true;
-        setTimeout(() => {
-            console.log('注册成功');
-            this.isLogin = true;
-            this.isLoading = false;
-        }, 3000);
+        return new Promise((resolve ,reject)=>{
+          Auth.register(this.values.username,this.values.password).then((user)=>{
+              UserStore.pullUser()
+              resolve(user)
+          }).catch((error)=>{
+              UserStore.restUser()
+              reject(error)
+          })
+        })
     }
 
     @action logout() {//注销
-        console.log('以注销');
+        Auth.logout()
+        UserStore.restUser()
     }
 }
 
-export {AuthStore}
+export default new AuthStore()

@@ -1,9 +1,11 @@
 import {createContext, useContext} from 'react';
-import {AuthStore} from './auth';
+import AuthStore from './auth';
+import UserStore from './user'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const context=createContext({
-    AuthStore:new AuthStore()
+    AuthStore,
+    UserStore
 })
+
 // eslint-disable-next-line react-hooks/rules-of-hooks
 export  const userStores=()=>useContext(context)
