@@ -11,7 +11,7 @@ class ImageStore {
     @observable isUploading=false
     @observable serverFile=null
 
-    @action  seFileName(newFileName:string){
+    @action  setFileName(newFileName:any){
         this.fileName=newFileName
     }
 

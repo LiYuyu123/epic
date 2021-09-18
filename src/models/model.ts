@@ -41,12 +41,12 @@ const Auth={
 }
 const Uploader={
     add(file:any,fileName:any){
+        const item=new AV.Object('Image')
+        const avFile=new AV.File(fileName,file)
+        item.set('title',fileName)
+        item.set('owner',AV.User.current())
+        item.set('url',avFile)
         return new Promise((resolve,reject)=>{
-            const item=new AV.Object('image')
-            const avFile=new AV.File(fileName,file)
-            item.set('title',fileName)
-            item.set('owner',AV.User.current())
-            item.set('url',avFile)
             item.save().then((serverFile:any)=>{
                 resolve(serverFile)
             },(error:any)=>{

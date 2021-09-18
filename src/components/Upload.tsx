@@ -6,13 +6,14 @@ const Upload=observer(()=>{
     const ref=useRef()
     const {ImageStore}=userStores()
     const bindOnChange=()=>{
-        console.log(ref.current)
+        // @ts-ignore
+        console.log(ref.current.files[0])
         // @ts-ignore
         if(ref.current.files.length>0){
             // @ts-ignore
             ImageStore.setFile(ref.current.files[0])
             //@ts-ignore
-            ImageStore.setFile(ref.current.files[0].name)
+            ImageStore.setFileName(ref.current.files[0].name)
             ImageStore.upload().then((serverFile)=>{
                 console.log('上传成功')
                 console.log(serverFile)
